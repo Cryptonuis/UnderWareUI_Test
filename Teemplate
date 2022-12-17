@@ -53,6 +53,9 @@ end
 
 function library:Window(options)
 	
+	AddSetting("MainColor", c)
+	
+	
 	local default = GetSetting("MainColor") or c
 	
 	
@@ -87,7 +90,6 @@ function library:Window(options)
 	function library:NewColor(new)
 		basecolor.Value = new
 		c = new
-		AddSetting("MainColor", tostring(new))
 	end
 	
 	function library:UIOpen()
