@@ -6,7 +6,7 @@ local Mouse = Player:GetMouse()
 local TextService = game:GetService("TextService")
 local library = {flags = {}}
 
-local c = Color3.fromRGB(4, 119, 220)
+local c2 = Color3.fromRGB(4, 119, 220)
 
 
 local function tweenObject(object, data, time)
@@ -53,10 +53,8 @@ end
 
 function library:Window(options)
 	
-	AddSetting("MainColor", c)
 	
-	
-	local default = GetSetting("MainColor") or c
+	local c = GetSetting("MainColor") or c2
 	
 	
 	local TitleWhite = options.Name
@@ -90,6 +88,7 @@ function library:Window(options)
 	function library:NewColor(new)
 		basecolor.Value = new
 		c = new
+		AddSetting("MainColor", new)
 	end
 	
 	function library:UIOpen()
