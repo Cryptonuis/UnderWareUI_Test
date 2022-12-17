@@ -52,6 +52,10 @@ end
 
 
 function library:Window(options)
+	
+	local default = GetSetting("MainColor") or c
+	
+	
 	local TitleWhite = options.Name
 	if game.CoreGui:FindFirstChild("BloxburgUi") then
 		game.CoreGui:FindFirstChild("BloxburgUi"):Destroy()
@@ -83,6 +87,7 @@ function library:Window(options)
 	function library:NewColor(new)
 		basecolor.Value = new
 		c = new
+		AddSetting("MainColor", tostring(new))
 	end
 	
 	function library:UIOpen()
@@ -1034,6 +1039,7 @@ function library:Window(options)
 
 			function section:Box(options)
 				local default = GetSetting(name) or options.Default
+
 				local name = options.Name
 				local callback = options.Callback
 
