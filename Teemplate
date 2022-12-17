@@ -74,10 +74,7 @@ function library:Window(options)
 
 	local basecolor = Instance.new("Color3Value", BloxburgUi)
 	basecolor.Value = c
-	
-	basecolor:GetPropertyChangedSignal("Value"):Connect(function()
-		c = basecolor.Value
-	end)
+
 	
 	function library:UnLoad()
 		BloxburgUi:Destroy()
@@ -85,10 +82,11 @@ function library:Window(options)
 	
 	function library:NewColor(new)
 		basecolor.Value = new
+		c = new
 	end
 	
 	function library:UIOpen()
-		BloxburgUi.Enabled = not BloxburgUi.Enabled
+		MainUIFrame.Visible = not MainUIFrame.Visible
 	end
 
 	if syn and syn.protect_gui then
@@ -1337,14 +1335,14 @@ function library:Window(options)
 
 				ToggleBackButton.MouseButton1Click:Connect(function()--better color pls
 
-					if ToggleIndicator.ImageColor3 == c then
+					if ToggleIndicator.ImageColor3 == basecolor.Value then
 						tweenObject(ToggleIndicator, {
 							ImageColor3 = Color3.fromRGB(0, 0, 0)
 						}, 0.1)
 						if callback then
 							callback(false)
 						end
-					elseif ToggleIndicator.ImageColor3 == Color3.fromRGB(0, 0, 0) then
+					else
 						tweenObject(ToggleIndicator, {
 							ImageColor3 = c
 						}, 0.1)
@@ -1357,14 +1355,14 @@ function library:Window(options)
 				local toggle = {}
 
 				function toggle:Update(bool)
-					if ToggleIndicator.ImageColor3 == c and bool == false then
+					if ToggleIndicator.ImageColor3 == basecolor.Value and bool == false then
 						tweenObject(ToggleIndicator, {
 							ImageColor3 = Color3.fromRGB(0, 0, 0)
 						}, 0.1)
 						if callback then
 							callback(false)
 						end
-					elseif ToggleIndicator.ImageColor3 == Color3.fromRGB(0, 0, 0) and bool == true then
+					else
 						tweenObject(ToggleIndicator, {
 							ImageColor3 = c
 						}, 0.1)
@@ -2075,6 +2073,9 @@ function library:Window(options)
 				Title.ZIndex = -4
 				Frame.Parent = SearchBoxBack
 				Frame.BackgroundColor3 = c
+				basecolor:GetPropertyChangedSignal("Value"):Connect(function()
+					Frame.BackgroundColor3 = basecolor.Value
+				end)
 				--224, 161, 0
 				Frame.BorderSizePixel = 0
 				Frame.Position = UDim2.new(0, 0, 0, 31)
